@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://passportkit.local/schemas/brief-input.schema.json",
+  "title": "brief-a-company input",
+  "description": "The runner trims company before validating this schema. Matching is exact against the fixture name, an alias, or the slug.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["company"],
+  "properties": {
+    "company": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 120
+    }
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://passportkit.local/schemas/runtime-export.schema.json",
+  "title": "PassportKit runtime export manifest",
+  "description": "Declares how the same agent definition is reached from more than one adapter. This is a local manifest, not a vendor runtime export.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "spec",
+    "agentId",
+    "definition",
+    "identityContract",
+    "identitySchema",
+    "coreRunner",
+    "toolInterface",
+    "tools",
+    "adapters",
+    "limits"
+  ],
+  "properties": {
+    "spec": { "const": "passportkit.export/v1" },
+    "agentId": { "type": "string", "minLength": 1 },
+    "definition": { "type": "string", "minLength": 1 },
+    "identityContract": { "type": "string", "minLength": 1 },
+    "identitySchema": { "type": "string", "minLength": 1 },
+    "coreRunner": { "type": "string", "minLength": 1 },
+    "toolInterface": { "type": "string", "minLength": 1 },
+    "tools": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "module"],
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "module": { "type": "string", "minLength": 1 },
+          "network": { "type": "string" },
+          "scope": { "type": "string" }
+        }
+      }
+    },
+    "adapters": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "module", "invoke"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "module": { "type": "string", "minLength": 1 },
+          "invoke": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "limits": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    }
+  }
+}

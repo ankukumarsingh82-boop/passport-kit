@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://passportkit.local/schemas/company-fixture.schema.json",
+  "title": "Local company fixture",
+  "description": "Fictional company record. The brief agent copies facts from this file and cites the companion markdown page. It does not browse the network.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "slug",
+    "name",
+    "aliases",
+    "founded",
+    "headquarters",
+    "sector",
+    "summary",
+    "products",
+    "facts",
+    "fictional"
+  ],
+  "properties": {
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "name": { "type": "string", "minLength": 1 },
+    "aliases": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "founded": { "type": "integer", "minimum": 1800, "maximum": 2100 },
+    "headquarters": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["city", "country"],
+      "properties": {
+        "city": { "type": "string", "minLength": 1 },
+        "country": { "type": "string", "minLength": 1 }
+      }
+    },
+    "sector": { "type": "string", "minLength": 1 },
+    "summary": { "type": "string", "minLength": 20 },
+    "products": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "facts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["label", "value"],
+        "properties": {
+          "label": { "type": "string", "minLength": 1 },
+          "value": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "fictional": { "const": true }
+  }
+}

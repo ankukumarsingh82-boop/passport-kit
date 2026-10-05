@@ -1,0 +1,28 @@
+{
+  "slug": "paperlane-health",
+  "name": "Paperlane Health",
+  "aliases": ["Paperlane"],
+  "founded": 2016,
+  "headquarters": {
+    "city": "Pune",
+    "country": "India"
+  },
+  "sector": "Clinic operations software",
+  "summary": "Fictional company used as a local fixture. Paperlane Health sells clinic operations software for scheduling and storerooms.",
+  "products": ["Appointment desk", "Storeroom inventory"],
+  "facts": [
+    {
+      "label": "Clinic desks",
+      "value": "Scheduling desk used by 40 partner clinics"
+    },
+    {
+      "label": "Inventory",
+      "value": "Clinic storeroom inventory, not a diagnostic device"
+    },
+    {
+      "label": "Headquarters staff",
+      "value": "70 people in Pune"
+    }
+  ],
+  "fictional": true
+}

@@ -1,0 +1,28 @@
+{
+  "slug": "helio-meter",
+  "name": "Helio Meter",
+  "aliases": ["Helio", "Helio Meter Inc."],
+  "founded": 2018,
+  "headquarters": {
+    "city": "Boulder",
+    "country": "United States"
+  },
+  "sector": "Climate instrumentation",
+  "summary": "Fictional company used as a local fixture. Helio Meter builds rooftop irradiance sensors and publishes the readings.",
+  "products": ["Rooftop irradiance sensor", "Sensor calibration service"],
+  "facts": [
+    {
+      "label": "Open dataset",
+      "value": "Quarterly rooftop irradiance dataset"
+    },
+    {
+      "label": "Calibration",
+      "value": "Lab calibration for rooftop sensors"
+    },
+    {
+      "label": "Team",
+      "value": "48 people"
+    }
+  ],
+  "fictional": true
+}

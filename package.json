@@ -1,0 +1,25 @@
+{
+  "name": "passportkit",
+  "version": "0.1.0",
+  "description": "Offline TypeScript scaffold for a portable, verifiable AI agent. Built as a local MVP for the HiDevs × Lyzr Agent Passport Challenge (Unstop 1755808).",
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "bin": {
+    "passportkit": "./dist/src/adapters/cli.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/src/adapters/cli.js",
+    "demo": "node dist/src/demo.js",
+    "serve": "node dist/src/adapters/http-stub.js",
+    "check": "npm run build && node --test dist/tests/check.test.js",
+    "test": "npm run check"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.21",
+    "typescript": "^5.8.3"
+  }
+}

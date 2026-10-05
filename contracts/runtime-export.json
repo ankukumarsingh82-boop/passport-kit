@@ -1,0 +1,39 @@
+{
+  "spec": "passportkit.export/v1",
+  "agentId": "brief-a-company",
+  "definition": "agents/brief-a-company/agent.json",
+  "identityContract": "contracts/agent-identity.md",
+  "identitySchema": "contracts/agent-identity.schema.json",
+  "coreRunner": "src/runner.ts",
+  "toolInterface": "src/tools/types.ts",
+  "tools": [
+    {
+      "name": "mock-web-fetch",
+      "module": "src/tools/mock-web-fetch.ts",
+      "network": "disabled"
+    },
+    {
+      "name": "notes-store",
+      "module": "src/tools/notes-store.ts",
+      "scope": "single-run"
+    }
+  ],
+  "adapters": [
+    {
+      "id": "cli",
+      "module": "src/adapters/cli.ts",
+      "invoke": "passportkit brief <company>"
+    },
+    {
+      "id": "http-stub",
+      "module": "src/adapters/http-stub.ts",
+      "invoke": "POST /v1/agents/brief-a-company/runs"
+    }
+  ],
+  "limits": [
+    "Local portability manifest for this repository.",
+    "The same runner is invoked by the CLI adapter and the HTTP stub.",
+    "This file is not an export to the OpenAI Agents SDK, CrewAI, Claude Code, or Lyzr.",
+    "This file is not evidence that a HiDevs verification gate was executed."
+  ]
+}

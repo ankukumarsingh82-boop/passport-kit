@@ -1,0 +1,136 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://passportkit.local/schemas/brief-output.schema.json",
+  "title": "brief-a-company result",
+  "description": "Shape returned by every adapter. Status-specific invariants (for example, notes exist only after status ok) are enforced by the runner and by tests.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "spec",
+    "status",
+    "agentId",
+    "runId",
+    "input",
+    "message",
+    "resolvedSlug",
+    "brief",
+    "notes",
+    "trace"
+  ],
+  "properties": {
+    "spec": { "const": "passportkit.result/v1" },
+    "status": {
+      "type": "string",
+      "enum": [
+        "ok",
+        "not_found",
+        "invalid_input",
+        "incomplete_fixture",
+        "invalid_fixture",
+        "fixture_mismatch"
+      ]
+    },
+    "agentId": { "const": "brief-a-company" },
+    "runId": {
+      "type": "string",
+      "pattern": "^run_[a-f0-9]{16}$"
+    },
+    "input": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["company"],
+      "properties": {
+        "company": { "type": "string", "maxLength": 4000 }
+      }
+    },
+    "message": { "type": "string", "minLength": 1 },
+    "resolvedSlug": {
+      "type": ["string", "null"],
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "brief": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "slug",
+        "sector",
+        "headquarters",
+        "founded",
+        "summary",
+        "products",
+        "facts",
+        "sources",
+        "fictional"
+      ],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "sector": { "type": "string", "minLength": 1 },
+        "headquarters": { "type": "string", "minLength": 1 },
+        "founded": { "type": "integer", "minimum": 1800, "maximum": 2100 },
+        "summary": { "type": "string", "minLength": 1 },
+        "products": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "facts": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["label", "value"],
+            "properties": {
+              "label": { "type": "string", "minLength": 1 },
+              "value": { "type": "string", "minLength": 1 }
+            }
+          }
+        },
+        "sources": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "type": "string",
+            "pattern": "^fixture://(companies|pages)/[a-z0-9]+(?:-[a-z0-9]+)*$"
+          }
+        },
+        "fictional": { "const": true }
+      }
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["key", "text"],
+        "properties": {
+          "key": { "type": "string", "minLength": 1 },
+          "text": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "trace": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["step", "tool", "ok", "detail"],
+        "properties": {
+          "step": { "type": "integer", "minimum": 1 },
+          "tool": {
+            "type": "string",
+            "enum": ["mock-web-fetch", "notes-store"]
+          },
+          "ok": { "type": "boolean" },
+          "detail": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  }
+}

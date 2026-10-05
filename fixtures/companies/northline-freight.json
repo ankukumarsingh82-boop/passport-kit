@@ -1,0 +1,28 @@
+{
+  "slug": "northline-freight",
+  "name": "Northline Freight",
+  "aliases": ["Northline"],
+  "founded": 2014,
+  "headquarters": {
+    "city": "Rotterdam",
+    "country": "Netherlands"
+  },
+  "sector": "Freight forwarding",
+  "summary": "Fictional company used as a local fixture. Northline Freight plans ocean and road lanes for mid-size shippers from Rotterdam.",
+  "products": ["Lane planning desk", "Bonded warehousing"],
+  "facts": [
+    {
+      "label": "Employees",
+      "value": "about 1,200"
+    },
+    {
+      "label": "Cold-chain lane",
+      "value": "Rotterdam-Oslo lane opened in 2023"
+    },
+    {
+      "label": "Customs brokerage",
+      "value": "In-house brokerage at the Rotterdam hub"
+    }
+  ],
+  "fictional": true
+}

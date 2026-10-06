@@ -82,6 +82,26 @@ The agent definition does not import the CLI or the HTTP server. Both adapters c
 
 `contracts/runtime-export.json` is a local export manifest: definition path, runner, tool interface, and the two adapter entry points. A later runtime can read that manifest and map the same definition onto another host. This repository does not emit an OpenAI Agents SDK, CrewAI, Claude Code, or Lyzr package. The manifest states that limit in its `limits` field.
 
+## OpenGAP manifest
+
+The repository root is also an [OpenGAP / gitagent](https://github.com/open-gitagent/opengap) agent (spec v0.1.0), so standard tooling can validate it and export it to other runtimes:
+
+| File | Purpose |
+| --- | --- |
+| `agent.yaml` | Manifest: name `passportkit`, version, model preference, skill, tools, runtime, compliance tier |
+| `SOUL.md` | Identity, style, values, and domain |
+| `RULES.md` | Hard constraints that mirror the behavior contract |
+| `skills/brief-a-company/SKILL.md` | The fixed six-step plan as an Agent Skills module |
+| `tools/mock-web-fetch.yaml`, `tools/notes-store.yaml` | Tool declarations with input and output schemas |
+| `EXPLAINABILITY.md` | How the agent decides, the data it uses, and its limitations |
+
+```bash
+npx @open-gitagent/opengap validate --compliance
+npx @open-gitagent/opengap export -f openai        # also: crewai, claude-code, lyzr
+```
+
+These exports turn the definition into instructions for an LLM host. They do not run `src/runner.ts`, and their tool functions are stubs until a host wires them to the TypeScript tools. See [EXPLAINABILITY.md](EXPLAINABILITY.md#limitations).
+
 ## Verification checklist
 
 Full checkpoints, commands, and the platform-gate column are in [VERIFICATION.md](VERIFICATION.md).

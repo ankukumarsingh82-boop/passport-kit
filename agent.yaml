@@ -1,0 +1,52 @@
+# OpenGAP / gitagent manifest (spec v0.1.0).
+# Schema: https://github.com/open-gitagent/opengap/blob/main/spec/schemas/agent-yaml.schema.json
+# The TypeScript reference runner (src/runner.ts) does not call a model. The
+# model block below only applies when this definition is exported to an
+# LLM-hosted runtime (OpenAI Agents SDK, CrewAI, Claude Code, Lyzr).
+spec_version: "0.1.0"
+name: passportkit
+version: 0.1.0
+description: Offline company-briefing agent that returns structured facts copied from local fictional fixtures, refuses live network access, and never invents a brief for an unknown company.
+author: Anku Kumar
+license: MIT
+
+model:
+  preferred: gpt-4o
+  fallback:
+    - claude-sonnet-4-5-20250929
+  constraints:
+    temperature: 0
+    max_tokens: 2048
+
+skills:
+  - brief-a-company
+
+tools:
+  - mock-web-fetch
+  - notes-store
+
+runtime:
+  max_turns: 8
+  timeout: 30
+
+compliance:
+  risk_tier: low
+  supervision:
+    human_in_the_loop: none
+  data_governance:
+    data_classification: public
+    cross_border: false
+
+tags:
+  - company-research
+  - offline
+  - deterministic
+  - fixtures
+  - portable-agent
+
+metadata:
+  reference_runner: src/runner.ts
+  reference_definition: agents/brief-a-company/agent.json
+  behavior_contract: contracts/agent-identity.md
+  network_access: disabled
+  fixtures_fictional: true

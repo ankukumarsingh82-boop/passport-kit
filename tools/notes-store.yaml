@@ -1,0 +1,39 @@
+name: notes-store
+description: Run-scoped key/value notes held in an in-memory Map that is discarded when the run returns. Supports op put, get, and list. Does not read or write the filesystem. Implemented in src/tools/notes-store.ts.
+version: 0.1.0
+input_schema:
+  type: object
+  properties:
+    op:
+      type: string
+      enum: [put, get, list]
+      description: Operation to perform
+    key:
+      type: string
+      description: Note key matching ^[a-z0-9:_-]{1,80}$ (required for put and get)
+    text:
+      type: string
+      description: Non-empty note text (required for put)
+  required: [op]
+output_schema:
+  type: object
+  properties:
+    ok: { type: boolean }
+    op:
+      type: string
+      enum: [put, get, list, invalid]
+    key: { type: [string, "null"] }
+    text: { type: [string, "null"] }
+    notes:
+      type: array
+      items:
+        type: object
+        properties:
+          key: { type: string }
+          text: { type: string }
+annotations:
+  requires_confirmation: false
+  read_only: false
+  cost: none
+  compliance_sensitive: false
+  idempotent: true

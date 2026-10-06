@@ -1,0 +1,32 @@
+name: mock-web-fetch
+description: Return packaged fixture bodies for fixture:// URLs (fixture://companies/index, fixture://companies/{slug}, fixture://pages/{slug}). Any http, https, or other scheme is refused with live_network_disabled and no socket is opened. Implemented in src/tools/mock-web-fetch.ts.
+version: 0.1.0
+input_schema:
+  type: object
+  properties:
+    url:
+      type: string
+      description: A fixture:// URL. Slugs must match ^[a-z0-9]+(?:-[a-z0-9]+)*$.
+  required: [url]
+output_schema:
+  type: object
+  properties:
+    ok: { type: boolean }
+    url: { type: string }
+    mediaType:
+      type: [string, "null"]
+      enum: [application/json, text/markdown, null]
+    body: { type: [string, "null"] }
+    error:
+      type: [object, "null"]
+      properties:
+        code:
+          type: string
+          enum: [live_network_disabled, invalid_url, not_found, invalid_fixture]
+        message: { type: string }
+annotations:
+  requires_confirmation: false
+  read_only: true
+  cost: none
+  compliance_sensitive: false
+  idempotent: true

@@ -2,7 +2,9 @@
 
 This document explains how the `passportkit` agent (the `brief-a-company` worker defined in [`agent.yaml`](agent.yaml) and [`agents/brief-a-company/agent.json`](agents/brief-a-company/agent.json)) reaches a result, what data it reads, and where it stops being reliable. Every statement below can be checked against [`src/runner.ts`](src/runner.ts), [`src/resolve.ts`](src/resolve.ts), the two tools in [`src/tools/`](src/tools/), and the 16 tests in [`tests/check.test.ts`](tests/check.test.ts).
 
-## How it decides
+## Decision Reasoning: How It Decides
+
+The agent decides by applying a fixed sequence of deterministic checks, and it answers only when every check passes. Its reasoning is visible in every result through the status, the resolved slug and the tool trace.
 
 The reference runner does not call a language model. Each decision is a fixed rule in `src/runner.ts`, applied in this order:
 
@@ -25,7 +27,9 @@ Every result is validated against `contracts/brief-output.schema.json` before it
 
 The CLI (`src/adapters/cli.ts`) and the HTTP stub (`src/adapters/http-stub.ts`) pass the input to `runAgent()` and return its result unchanged. Tests assert that both are deep-equal to the core result.
 
-## Data it uses
+## Inputs and Data Sources (Data Used)
+
+The only input is a company name supplied by the caller, and the only data sources are local fictional fixtures bundled in this repository. The agent never reads the internet, credentials or user history, and nothing persists between runs.
 
 | Data | Location | How it is used |
 | --- | --- | --- |
@@ -39,7 +43,9 @@ All three companies are fictional, and every record sets `fictional: true`. Each
 
 What it does **not** use: the public internet, search engines, environment variables, credentials, user history, or any model output. `mock-web-fetch` refuses `http:`, `https:`, and every other non-`fixture://` scheme with `live_network_disabled` and opens no socket. `notes-store` keeps notes in a `Map` that is discarded when the run returns, and it does not touch the filesystem. Nothing persists between runs.
 
-## Limitations
+## Limitations, Constraints and Known Issues
+
+The agent is deliberately narrow, so its limitations are mostly constraints by design. The known issues below describe where its answers stop being useful or reliable.
 
 - **Three companies only.** The agent can brief only the three bundled fictional companies. Any real company returns `not_found`. This is intentional, but it means the agent has no value for real research as shipped.
 - **Exact matching only.** Typos, abbreviations that are not listed as aliases, and other spellings (for example `Northline Freight BV`) return `not_found`. A name that matches more than one fixture also returns `not_found`, without saying it was ambiguous.
